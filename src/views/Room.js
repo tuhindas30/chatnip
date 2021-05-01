@@ -1,99 +1,108 @@
+import { useState } from "react";
+import { useParams } from "react-router";
 import "../assets/css/room.css";
+import firebase, { firestore } from "../firebase";
+import useFirestoreQuery from "../hooks/useFirestoreQuery";
+import useRequireAuth from "../hooks/useRequiredAuth";
 
 const Room = () => {
-	return (
-		<>
-			<div className="dashboard--container">
-				<div className="room--container">
-					<div className="room--header">
-						<div className="room--title">Room</div>
-						<small>
-							<span style={{ color: "var(--color-primary-200)" }}>with</span>{" "}
-							<span className="room--admin">R44LQ72U7Q6I</span>
-						</small>
-					</div>
-					<div className="room-chat-window">
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Hello</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Hi</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Hey</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Nice to talk</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Yup</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Bye</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Bye</div>
-						</div>
-						<div className="chat-message--container">
-							<div className="chat-user-avatar">
-								<i className="bi bi-person-circle"></i>
-							</div>
-							<div className="chat-message">Bye</div>
-						</div>
-					</div>
-					<div className="room--footer">
-						<div className="input-message">
-							<div className="row">
-								<form className="col s12">
-									<div className="row">
-										<div className="input-field col s6">
-											<i className="material-icons prefix">mode_edit</i>
-											<textarea
-												id="icon_prefix2"
-												className="materialize-textarea"></textarea>
-											<label for="icon_prefix2">Message</label>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div className="footer--button">
-							<button className="btn waves-effect waves-light" name="action">
-								Send
-								<i className="bi bi-arrow-right-circle-fill right"></i>
-							</button>
-						</div>
-						<div className="footer--button">
-							<button className="btn waves-effect waves-light" name="action">
-								Leave
-								<i className="bi bi-box-arrow-right right"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+  const auth = useRequireAuth();
+  const { roomId } = useParams();
+  const [message, setMessage] = useState("");
+
+  // const roomsCollectionRef = firestore
+  //   .collection("rooms")
+  //   .where("members", "array-contains", auth.user.uid);
+
+  // const { data: roomData, status } = useFirestoreQuery(roomsCollectionRef);
+
+  // console.log(roomData);
+
+  const conversationCollectionRef = firestore
+    .collection("rooms")
+    .doc(roomId)
+    .collection("conversations");
+
+  const { data } = useFirestoreQuery(
+    conversationCollectionRef.orderBy("createdAt").limit(25)
+  );
+
+  const handleMessageSubmit = async () => {
+    const { uid, photoUrl } = auth.user;
+    await conversationCollectionRef.add({
+      content: message,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      photoUrl,
+      uid,
+    });
+    setMessage("");
+  };
+  if (!auth.user) return <div>Loading....</div>;
+  return (
+    <>
+      <div className="dashboard--container">
+        <div className="room--container">
+          <div className="room--header">
+            <div className="room--title">Room</div>
+            <small>
+              <span style={{ color: "var(--color-primary-200)" }}>with</span>{" "}
+              <span className="room--admin">{auth.user.uid}</span>
+            </small>
+          </div>
+          <div className="room-chat-window">
+            {Array.isArray(data) &&
+              data.map((chat) => (
+                <div className="chat-message--container">
+                  <div className="chat-user-avatar">
+                    {chat?.photoUrl ? (
+                      <img src={chat.photoUrl} alt="avatar" />
+                    ) : (
+                      <i className="bi bi-person-circle"></i>
+                    )}
+                  </div>
+                  <div className="chat-message">{chat.content}</div>
+                </div>
+              ))}
+          </div>
+          <div className="room--footer">
+            <div className="input-message">
+              {/* <div className="row">
+                <form className="col s12">
+                  <div className="row">
+                    
+                  </div>
+                </form>
+              </div> */}
+
+              <div className="input-field">
+                <i className="material-icons prefix">mode_edit</i>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  id="icon_prefix2"
+                  className="materialize-textarea"></textarea>
+                <label for="icon_prefix2">Message</label>
+              </div>
+            </div>
+            <div className="footer--button">
+              <button
+                onClick={handleMessageSubmit}
+                className="btn waves-effect waves-light"
+                name="action">
+                Send
+                <i className="bi bi-arrow-right-circle-fill right"></i>
+              </button>
+            </div>
+            <div className="footer--button">
+              <button className="btn waves-effect waves-light" name="action">
+                Leave
+                <i className="bi bi-box-arrow-right right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 export default Room;

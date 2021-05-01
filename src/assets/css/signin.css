@@ -1,40 +1,40 @@
 .signin--container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	color: var(--color-primary-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--color-primary-100);
 }
 
 .login-form--container {
-	padding: 3rem;
-	border-radius: 1rem;
-	background-color: var(--color-primary-800);
-	border: 1px solid black;
+  padding: 3rem;
+  border-radius: 1rem;
+  background-color: var(--color-primary-800);
+  border: 1px solid black;
 }
 
 .form--title {
-	font-size: 2rem;
-	font-weight: 500;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 .login-buttons--container {
-	padding-top: 1rem;
-	text-align: center;
-	/* border: 1px solid black; */
+  padding-top: 1rem;
+  text-align: center;
+  /* border: 1px solid black; */
 }
 
 .login--button {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
-.login--button a {
-	border-radius: 0.5rem;
-	background-color: var(--color-primary-700);
-	width: 100%;
+.login--button button {
+  border-radius: 0.5rem;
+  background-color: var(--color-primary-700);
+  width: 100%;
 }
 
 .form--link {
-	color: var(--color-accent);
-	cursor: pointer;
+  color: var(--color-accent);
+  cursor: pointer;
 }

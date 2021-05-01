@@ -1,73 +1,73 @@
 .room--container {
-	max-width: 50%;
-	margin: auto;
-	border-radius: 0.5rem;
-	background-color: var(--color-primary-800);
-	/* border: 1px solid var(--color-primary-100); */
+  max-width: 50%;
+  margin: auto;
+  border-radius: 0.5rem;
+  background-color: var(--color-primary-800);
+  /* border: 1px solid var(--color-primary-100); */
 }
 
 .room--header {
-	padding: 0.5rem 1rem;
-	border-bottom: 1px solid var(--color-primary-200);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-primary-200);
 }
 
 .room--title {
-	font-size: 1.2rem;
-	font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .room--admin {
-	font-weight: 600;
+  font-weight: 600;
 }
 
 .room-chat-window {
-	padding: 1rem;
-	height: 40vh;
-	overflow: auto;
-	/* border: 1px solid var(--color-primary-100); */
+  padding: 1rem;
+  height: 40vh;
+  overflow: auto;
+  /* border: 1px solid var(--color-primary-100); */
 }
 
 .chat-message--container {
-	display: flex;
-	align-items: center;
-	font-size: 1.2rem;
-	/* border: 1px solid var(--color-primary-100); */
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  /* border: 1px solid var(--color-primary-100); */
 }
 
 .chat-user-avatar {
-	font-size: 2rem;
+  font-size: 2rem;
 }
 
 .chat-message {
-	margin-left: 1rem;
-	padding: 0 1rem;
-	height: fit-content;
-	border-radius: 2rem;
-	background-color: var(--color-primary-300);
+  margin-left: 1rem;
+  padding: 0 1rem;
+  height: fit-content;
+  border-radius: 2rem;
+  background-color: var(--color-primary-300);
 }
 
 .room--footer {
-	display: flex;
-	align-items: center;
-	padding: 1rem;
-	/* border: 1px solid var(--color-primary-100); */
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  /* border: 1px solid var(--color-primary-100); */
 }
 
 .input-message {
-	width: 100%;
-	/* border: 1px solid var(--color-primary-100); */
+  width: 100%;
+  /* border: 1px solid var(--color-primary-100); */
 }
 
 .row {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .materialize-textarea {
-	color: var(--color-primary-100);
-	width: 100%;
+  color: var(--color-primary-100);
+  width: 100%;
 }
 
 .footer--button button {
-	margin: 0 1rem;
-	background-color: var(--color-primary-700);
+  margin: 0 1rem;
+  background-color: var(--color-primary-700);
 }

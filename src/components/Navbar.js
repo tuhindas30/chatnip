@@ -1,29 +1,41 @@
 import "../assets/css/navbar.css";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
-	return (
-		<>
-			<div className="navbar-fixed">
-				<nav className="nav-extended">
-					<div className="nav-wrapper">
-						<a href className="brand-logo">
-							ChatNip
-						</a>
-						<a href data-target="mobile-demo" className="sidenav-trigger">
-							<i className="material-icons">menu</i>
-						</a>
-						<div id="nav-mobile" className="right hide-on-med-and-down">
-							<i class="bi bi-person-circle"></i>
-						</div>
-					</div>
-				</nav>
-			</div>
+  const { user, signout } = useAuth();
+  return (
+    <>
+      <div className="navbar-fixed">
+        <nav className="nav-extended">
+          <div className="nav-wrapper">
+            <a href="#" className="brand-logo">
+              ChatNip
+            </a>
+            <a href="#" className="sidenav-trigger">
+              <i className="material-icons">menu</i>
+            </a>
+            <div id="nav-mobile" className="right hide-on-med-and-down">
+              {user?.photoUrl ? (
+                <img src={user.photoUrl} alt={user.name} />
+              ) : (
+                <i className="bi bi-person-circle"></i>
+              )}
+              <button onClick={signout}>Signout</button>
+            </div>
+          </div>
+        </nav>
+      </div>
 
-			<div className="sidenav" id="mobile-demo">
-				<i class="bi bi-person-circle"></i>
-			</div>
-		</>
-	);
+      <div className="sidenav" id="mobile-demo">
+        {user?.photoUrl ? (
+          <img src={user.photoUrl} alt={user.name} />
+        ) : (
+          <i className="bi bi-person-circle"></i>
+        )}
+        <button onClick={signout}>Signout</button>
+      </div>
+    </>
+  );
 };
 
 export default Navbar;

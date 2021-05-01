@@ -8,16 +8,16 @@ import Dashboard from "./views/Dashboard";
 import Room from "./views/Room";
 
 const App = () => {
-	return (
-		<>
-			<Navbar />
-			<Routes>
-				<Route path="/" element={<SignIn />}></Route>
-				<Route path="/dash" element={<Dashboard />}></Route>
-				<Route path="/room" element={<Room />}></Route>
-			</Routes>
-		</>
-	);
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<SignIn />}></Route>
+        <Route path="/dash" element={<Dashboard />}></Route>
+        <Route path="/room/:roomId" element={<Room />}></Route>
+      </Routes>
+    </>
+  );
 };
 
 export default App;

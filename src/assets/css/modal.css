@@ -1,0 +1,21 @@
+.modal {
+  display: block;
+  top: 15rem;
+  background-color: var(--color-primary-800);
+}
+
+.modal .modal-footer {
+  padding: 0 2rem;
+  background-color: var(--color-primary-800);
+}
+
+.modal .modal-footer .btn-flat {
+  margin: 0 1rem;
+  font-weight: 600;
+  color: var(--color-primary-100);
+  background-color: var(--color-accent);
+}
+
+.input-field input {
+  color: var(--color-primary-100);
+}
