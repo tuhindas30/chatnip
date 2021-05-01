@@ -1,6 +1,6 @@
 import "../assets/css/signin.css";
 
-const Signin = () => {
+const SignIn = () => {
 	return (
 		<div className="signin--container">
 			<div className="login-form--container">
@@ -35,4 +35,4 @@ const Signin = () => {
 	);
 };
 
-export default Signin;
+export default SignIn;

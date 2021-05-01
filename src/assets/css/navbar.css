@@ -1,0 +1,10 @@
+.nav-wrapper {
+	padding: 0 2rem;
+	background-color: var(--color-primary-900);
+	border: 1px solid var(--color-primary-100);
+}
+
+nav .brand-logo {
+	font-weight: 500;
+	color: var(--color-accent);
+}
