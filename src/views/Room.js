@@ -6,7 +6,7 @@ import useFirestoreQuery from "../hooks/useFirestoreQuery";
 import useRequireAuth from "../hooks/useRequiredAuth";
 
 const Room = () => {
-  const [raiseHand, setRaiseHand] = useState({ flag: false, userId: null });
+  // const [raiseHand, setRaiseHand] = useState({ flag: false, userId: null });
   const auth = useRequireAuth();
   const { roomId } = useParams();
   const [message, setMessage] = useState("");
@@ -17,8 +17,9 @@ const Room = () => {
     roomCollectionRef.orderBy("createdAt", "desc").limit(25)
   );
 
-  const roomObj = roomData?.find((item) => item.id === roomId);
+  const roomObj = roomData && roomData.find((item) => item?.id === roomId);
 
+  console.log(roomObj);
   const conversationCollectionRef = firestore
     .collection("rooms")
     .doc(roomId)
@@ -30,41 +31,49 @@ const Room = () => {
 
   const handleMessageSubmit = async () => {
     const { uid, photoUrl } = auth.user;
-    await conversationCollectionRef.add({
-      content: message,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      photoUrl,
-      uid,
-    });
-    setMessage("");
+    try {
+      await conversationCollectionRef.add({
+        content: message,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        photoUrl,
+        uid,
+      });
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRaiseHand = (userId) => {
-    setRaiseHand({ flag: true, userId: userId });
-  };
+  // const handleRaiseHand = (userId) => {
+  //   setRaiseHand({ flag: true, userId: userId });
+  // };
 
   const handleUserAccept = async (userId) => {
-    await roomCollectionRef
-      .doc(roomId)
-      .add({ members: [userId] }, { merge: true });
+    try {
+      await roomCollectionRef
+        .doc(roomId)
+        .add({ members: [userId] }, { merge: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!auth.user) return <div>Loading....</div>;
+
   return (
     <>
       <div className="dashboard--container">
-        {raiseHand.flag && (
-          <div className="notification">
-            <div>Username: {raiseHand.userId} wants to join</div>
-            <button
-              onClick={() => handleUserAccept(raiseHand.userId)}
-              className="btn waves-effect waves-light"
-              name="action">
-              Accept
-              <i className="bi bi-arrow-right-circle-fill right"></i>
-            </button>
-          </div>
-        )}
+        {/* <div className="notification">
+                <div>Username: {raiseHand.userId} wants to join</div>
+                <button
+                  onClick={() => handleUserAccept(raiseHand.userId)}
+                  className="btn waves-effect waves-light"
+                  name="action">
+                  Accept
+                  <i className="bi bi-arrow-right-circle-fill right"></i>
+                </button>
+              </div> */}
+
         <div className="room--container">
           <div className="room--header">
             <div className="room--title">Room</div>
@@ -89,40 +98,40 @@ const Room = () => {
               ))}
           </div>
           <div className="room--footer">
-            {roomObj?.members?.some((member) => member === auth.user.uid) ? (
-              <>
-                <div className="input-message">
-                  <div className="input-field">
-                    <i className="material-icons prefix">mode_edit</i>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      id="icon_prefix2"
-                      className="materialize-textarea"></textarea>
-                    <label htmlFor="icon_prefix2">Message</label>
-                  </div>
+            {/* {roomObj?.members?.some((member) => member === auth.user.uid) ? ( */}
+            <>
+              <div className="input-message">
+                <div className="input-field">
+                  <i className="material-icons prefix">mode_edit</i>
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    id="icon_prefix2"
+                    className="materialize-textarea"></textarea>
+                  <label htmlFor="icon_prefix2">Message</label>
                 </div>
-                <div className="footer--button">
-                  <button
-                    onClick={() => handleMessageSubmit(auth.user.uid)}
-                    className="btn waves-effect waves-light"
-                    name="action">
-                    Send
-                    <i className="bi bi-arrow-right-circle-fill right"></i>
-                  </button>
-                </div>
-              </>
-            ) : (
+              </div>
               <div className="footer--button">
                 <button
-                  onClick={handleRaiseHand}
+                  onClick={() => handleMessageSubmit(auth.user.uid)}
                   className="btn waves-effect waves-light"
                   name="action">
-                  Raise Hand
+                  Send
                   <i className="bi bi-arrow-right-circle-fill right"></i>
                 </button>
               </div>
-            )}
+            </>
+            {/* ) : ( */}
+            <div className="footer--button">
+              {/* <button
+                // onClick={() => handleRaiseHand(auth.user.uid)}
+                className="btn waves-effect waves-light"
+                name="action">
+                Raise Hand
+                <i className="bi bi-arrow-right-circle-fill right"></i>
+              </button> */}
+            </div>
+            {/* )} */}
             <div className="footer--button">
               <button className="btn waves-effect waves-light" name="action">
                 Leave
