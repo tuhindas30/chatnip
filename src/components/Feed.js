@@ -32,6 +32,7 @@ const Feed = ({ uid }) => {
         <PropagateLoader loading={true} size={15} color="var(--color-accent)" />
       </div>
     );
+
   return (
     <div className="feed-rooms--container">
       <ToastContainer />
