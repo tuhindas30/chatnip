@@ -1,3 +1,7 @@
+/**
+ * Ref: http://usehooks.com/
+ */
+
 import { useEffect, useReducer } from "react";
 import useMemoCompare from "./useMemoCompare";
 

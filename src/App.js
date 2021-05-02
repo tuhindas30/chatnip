@@ -6,6 +6,7 @@ import SignIn from "./views/SignIn";
 import Navbar from "./components/Navbar";
 import Dashboard from "./views/Dashboard";
 import Room from "./views/Room";
+import Error404 from "./views/Error404";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/dash" element={<Dashboard />}></Route>
         <Route path="/room/:roomId" element={<Room />}></Route>
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </>
   );

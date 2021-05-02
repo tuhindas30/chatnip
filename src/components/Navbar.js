@@ -4,17 +4,14 @@ import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const { user, signout } = useAuth();
-  console.log({ user });
+
   return (
     <>
       <nav className="nav-extended">
         <div className="nav-wrapper">
-          <Link to="/" className="brand-logo">
+          <Link to="/dash" className="brand-logo">
             ChatNip
           </Link>
-          {/* <a href="#" className="sidenav-trigger">
-              <i className="material-icons">menu</i>
-            </a> */}
           <div className="right hide-on-med-and-down">
             <div className="user--avatar">
               {user?.photoUrl ? (

@@ -1,3 +1,7 @@
+/**
+ * Ref: http://usehooks.com/
+ */
+
 import { useEffect, useRef } from "react";
 
 function useMemoCompare(next, compare) {

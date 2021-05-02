@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import "../assets/css/signin.css";
 import useRequireAuth from "../hooks/useRequiredAuth";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 const SignIn = () => {
   const auth = useRequireAuth();
@@ -11,7 +12,7 @@ const SignIn = () => {
       navigate("/dash", { replace: true });
     }
   }, [auth.user]);
-  if (auth.user === null) return <div>Loading....</div>;
+
   const handleGoogleAuthClick = async () => {
     try {
       await auth.signInWithGoogle();
@@ -27,6 +28,13 @@ const SignIn = () => {
       console.log(error);
     }
   };
+
+  if (auth.user === null)
+    return (
+      <div className="loader">
+        <PropagateLoader loading={true} size={15} color="var(--color-accent)" />
+      </div>
+    );
 
   return (
     <div className="signin--container">

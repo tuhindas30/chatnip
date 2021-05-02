@@ -14,7 +14,7 @@
   font-weight: 500;
 }
 
-.feed--button a {
+.feed--button .btn {
   border-radius: 0.5rem;
   background-color: var(--color-accent);
 }
@@ -40,6 +40,10 @@
 
 .room-members-live-count {
   padding: 0.5rem 0;
+}
+
+.room-members-live-count .btn {
+  background-color: var(--color-accent);
 }
 
 .live--indicator {

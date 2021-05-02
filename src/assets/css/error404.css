@@ -1,0 +1,33 @@
+.error-msg-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4rem;
+  height: 75vh;
+  background-color: var(--rb-light-grey);
+}
+
+.error-msg-container .btn {
+  background-color: var(--color-accent);
+}
+
+.error-msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  color: var(--rb-light-black);
+}
+
+.error-msg-bold {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.error-msg-take-home {
+  padding: 1rem 4rem;
+  font-size: 1.2rem;
+  text-align: center;
+}

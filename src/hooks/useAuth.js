@@ -1,3 +1,7 @@
+/**
+ * Ref: http://usehooks.com/
+ */
+
 import React, { useState, useEffect, useContext, createContext } from "react";
 import firebase, { auth } from "../firebase";
 const authContext = createContext();

@@ -5,7 +5,9 @@ import useRequireAuth from "../hooks/useRequiredAuth";
 import { useState } from "react";
 import firebase, { firestore } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import useFirestoreQuery from "../hooks/useFirestoreQuery";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = () => {
   const [showModal, setModal] = useState(false);
@@ -16,10 +18,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const roomCollectionRef = firestore.collection("rooms");
 
-  const { data } = useFirestoreQuery(
-    roomCollectionRef.orderBy("createdAt", "desc").limit(25)
-  );
-
   const handleCreateRoom = async () => {
     const { uid } = auth.user;
     try {
@@ -29,7 +27,12 @@ const Dashboard = () => {
         members: [uid],
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
-      navigate(`/room/${data && data[0].id}`);
+      toast.dark("Room created", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+      });
+      setModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -55,9 +58,15 @@ const Dashboard = () => {
     setJoinModal(false);
     setRoomId("");
   };
-  if (!auth.user) return <div>Loading....</div>;
+  if (!auth.user)
+    return (
+      <div className="loader">
+        <PropagateLoader loading={true} size={15} color="var(--color-accent)" />
+      </div>
+    );
   return (
     <div className="dashboard--container">
+      <ToastContainer />
       {showModal && (
         <div id="modal1" className="modal">
           <div className="modal-content">
@@ -77,12 +86,12 @@ const Dashboard = () => {
           <div className="modal-footer">
             <button
               onClick={handleModalClose}
-              className="modal-close waves-effect waves-green btn-flat">
+              className="waves-effect waves-green btn-flat">
               Close
             </button>
             <button
               onClick={handleCreateRoom}
-              className="modal-close waves-effect waves-green btn-flat">
+              className="waves-effect waves-green btn-flat">
               Create
             </button>
           </div>
