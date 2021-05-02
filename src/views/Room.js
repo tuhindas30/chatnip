@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import "../assets/css/room.css";
 import firebase, { firestore } from "../firebase";
 import useFirestoreQuery from "../hooks/useFirestoreQuery";
@@ -105,13 +106,19 @@ const Room = () => {
               </button>
             </div>
             <div className="footer--button">
-              <button
-                onClick={handleLeaveRoom}
-                className="btn waves-effect waves-light"
-                name="action">
-                Leave
-                <i className="bi bi-box-arrow-right right"></i>
-              </button>
+              {roomObj?.ownerId === auth.user.uid ? (
+                <Link to="/" className="btn waves-effect waves-light">
+                  Back
+                </Link>
+              ) : (
+                <button
+                  onClick={handleLeaveRoom}
+                  className="btn waves-effect waves-light"
+                  name="action">
+                  Leave
+                  <i className="bi bi-box-arrow-right right"></i>
+                </button>
+              )}
             </div>
           </div>
         </div>
