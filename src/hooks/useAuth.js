@@ -21,7 +21,11 @@ function useProvideAuth() {
 
   function signInWithGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
-    // console.log(provider);
+    return auth.signInWithPopup(provider);
+  }
+
+  function signInWithGitHub() {
+    var provider = new firebase.auth.GithubAuthProvider();
     return auth.signInWithPopup(provider);
   }
 
@@ -62,6 +66,7 @@ function useProvideAuth() {
     isLoading,
     user,
     signInWithGoogle,
+    signInWithGitHub,
     signout,
   };
 }

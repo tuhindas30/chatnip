@@ -31,15 +31,22 @@
   display: flex;
   align-items: center;
   font-size: 1.2rem;
+  margin: 1rem 0;
   /* border: 1px solid var(--color-primary-100); */
 }
 
+.sent {
+  flex-direction: row-reverse;
+}
+
 .chat-user-avatar {
+  display: flex;
+  align-items: center;
   font-size: 2rem;
 }
 
 .chat-message {
-  margin-left: 1rem;
+  margin: 0 1rem;
   padding: 0 1rem;
   height: fit-content;
   border-radius: 2rem;
@@ -65,6 +72,10 @@
 .materialize-textarea {
   color: var(--color-primary-100);
   width: 100%;
+}
+
+.footer--button {
+  display: flex;
 }
 
 .footer--button button {

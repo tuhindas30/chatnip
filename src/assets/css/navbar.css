@@ -1,10 +1,30 @@
+.right {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+}
+
 .nav-wrapper {
-	padding: 0 2rem;
-	background-color: var(--color-primary-900);
-	/* border: 1px solid var(--color-primary-100); */
+  padding: 0 2rem;
+  background-color: var(--color-primary-900);
+  /* border: 1px solid var(--color-primary-100); */
 }
 
 nav .brand-logo {
-	font-weight: 500;
-	color: var(--color-accent);
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.user--avatar {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 3rem;
+  height: 3rem;
+}
+
+.signout--btn {
+  margin-left: 1rem;
 }

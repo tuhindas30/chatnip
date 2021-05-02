@@ -72,10 +72,17 @@ const Room = () => {
           <div className="room-chat-window">
             {Array.isArray(data) &&
               data.map((chat) => (
-                <div className="chat-message--container">
+                <div
+                  className={`chat-message--container ${
+                    roomObj?.ownerId === auth.user.uid && "sent"
+                  }`}>
                   <div className="chat-user-avatar">
                     {chat?.photoUrl ? (
-                      <img src={chat.photoUrl} alt="avatar" />
+                      <img
+                        src={chat.photoUrl}
+                        alt="avatar"
+                        className="circle"
+                      />
                     ) : (
                       <i className="bi bi-person-circle"></i>
                     )}
@@ -101,11 +108,14 @@ const Room = () => {
                 onClick={() => handleMessageSubmit(auth.user.uid)}
                 className="btn waves-effect waves-light"
                 name="action">
-                Send
-                <i className="bi bi-arrow-right-circle-fill right"></i>
+                <i class="bi bi-caret-right-fill"></i>
               </button>
-            </div>
-            <div className="footer--button">
+              <button
+                onClick={navigator.clipboard.writeText(roomId)}
+                className="btn waves-effect waves-light"
+                name="action">
+                <i class="bi bi-clipboard"></i>
+              </button>
               {roomObj?.ownerId === auth.user.uid ? (
                 <Link to="/" className="btn waves-effect waves-light">
                   Back

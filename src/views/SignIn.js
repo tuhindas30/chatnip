@@ -20,6 +20,14 @@ const SignIn = () => {
     }
   };
 
+  const handleGitHubAuthClick = async () => {
+    try {
+      await auth.signInWithGitHub();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="signin--container">
       <div className="login-form--container">
@@ -39,15 +47,11 @@ const SignIn = () => {
             </button>
           </div>
           <div className="login--button">
-            <button className="waves-effect waves-light btn-large">
+            <button
+              onClick={handleGitHubAuthClick}
+              className="waves-effect waves-light btn-large">
               <i className="bi bi-github left"></i>
               Login with GitHub
-            </button>
-          </div>
-          <div className="login--button">
-            <button className="waves-effect waves-light btn-large">
-              <i className="bi bi-twitter left"></i>
-              Login with Twitter
             </button>
           </div>
         </div>

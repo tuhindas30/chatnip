@@ -4,37 +4,44 @@ import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const { user, signout } = useAuth();
+  console.log({ user });
   return (
     <>
-      <div className="navbar-fixed">
-        <nav className="nav-extended">
-          <div className="nav-wrapper">
-            <Link to="/" className="brand-logo">
-              ChatNip
-            </Link>
-            {/* <a href="#" className="sidenav-trigger">
+      <nav className="nav-extended">
+        <div className="nav-wrapper">
+          <Link to="/" className="brand-logo">
+            ChatNip
+          </Link>
+          {/* <a href="#" className="sidenav-trigger">
               <i className="material-icons">menu</i>
             </a> */}
-            <div id="nav-mobile" className="right hide-on-med-and-down">
+          <div className="right hide-on-med-and-down">
+            <div className="user--avatar">
               {user?.photoUrl ? (
-                <img src={user.photoUrl} alt={user.name} />
+                <img src={user.photoUrl} alt={user.name} className="circle" />
               ) : (
                 <i className="bi bi-person-circle"></i>
               )}
-              <button onClick={signout}>Signout</button>
             </div>
+            {user && (
+              <button
+                className="waves-effect waves-light btn signout--btn"
+                onClick={signout}>
+                Signout
+              </button>
+            )}
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
 
-      <div className="sidenav" id="mobile-demo">
+      {/* <div>
         {user?.photoUrl ? (
           <img src={user.photoUrl} alt={user.name} />
         ) : (
           <i className="bi bi-person-circle"></i>
         )}
         <button onClick={signout}>Signout</button>
-      </div>
+      </div> */}
     </>
   );
 };
