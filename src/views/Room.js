@@ -74,7 +74,7 @@ const Room = () => {
               data.map((chat) => (
                 <div
                   className={`chat-message--container ${
-                    roomObj?.ownerId === auth.user.uid && "sent"
+                    chat.uid === auth.user.uid && "sent"
                   }`}>
                   <div className="chat-user-avatar">
                     {chat?.photoUrl ? (

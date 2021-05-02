@@ -39,6 +39,10 @@
   flex-direction: row-reverse;
 }
 
+.received {
+  flex-direction: row;
+}
+
 .chat-user-avatar {
   display: flex;
   align-items: center;
