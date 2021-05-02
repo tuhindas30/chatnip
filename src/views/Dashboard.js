@@ -14,7 +14,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const roomCollectionRef = firestore.collection("rooms");
 
-  const { data, status } = useFirestoreQuery(
+  const { data } = useFirestoreQuery(
     roomCollectionRef.orderBy("createdAt", "desc").limit(25)
   );
 
@@ -25,7 +25,6 @@ const Dashboard = () => {
       members: [uid],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    // data.then((data) => console.log(data));
     navigate(`/room/${data && data[0].id}`);
   };
 
