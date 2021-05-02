@@ -6,6 +6,7 @@ import useFirestoreQuery from "../hooks/useFirestoreQuery";
 import useRequireAuth from "../hooks/useRequiredAuth";
 
 const Room = () => {
+  const [raiseHand, setRaiseHand] = useState({ flag: false, userId: null });
   const auth = useRequireAuth();
   const { roomId } = useParams();
   const [message, setMessage] = useState("");
@@ -17,12 +18,6 @@ const Room = () => {
   );
 
   const roomObj = roomData?.find((item) => item.id === roomId);
-
-  console.log(roomObj?.members?.some((member) => member === auth.user.uid));
-
-  console.log(auth.user.uid);
-
-  console.log({ roomObj });
 
   const conversationCollectionRef = firestore
     .collection("rooms")
@@ -43,10 +38,33 @@ const Room = () => {
     });
     setMessage("");
   };
+
+  const handleRaiseHand = (userId) => {
+    setRaiseHand({ flag: true, userId: userId });
+  };
+
+  const handleUserAccept = async (userId) => {
+    await roomCollectionRef
+      .doc(roomId)
+      .add({ members: [userId] }, { merge: true });
+  };
+
   if (!auth.user) return <div>Loading....</div>;
   return (
     <>
       <div className="dashboard--container">
+        {raiseHand.flag && (
+          <div className="notification">
+            <div>Username: {raiseHand.userId} wants to join</div>
+            <button
+              onClick={() => handleUserAccept(raiseHand.userId)}
+              className="btn waves-effect waves-light"
+              name="action">
+              Accept
+              <i className="bi bi-arrow-right-circle-fill right"></i>
+            </button>
+          </div>
+        )}
         <div className="room--container">
           <div className="room--header">
             <div className="room--title">Room</div>
@@ -71,7 +89,7 @@ const Room = () => {
               ))}
           </div>
           <div className="room--footer">
-            {roomObj?.members?.some((member) => member === auth.user.uid) && (
+            {roomObj?.members?.some((member) => member === auth.user.uid) ? (
               <>
                 <div className="input-message">
                   <div className="input-field">
@@ -86,7 +104,7 @@ const Room = () => {
                 </div>
                 <div className="footer--button">
                   <button
-                    onClick={handleMessageSubmit}
+                    onClick={() => handleMessageSubmit(auth.user.uid)}
                     className="btn waves-effect waves-light"
                     name="action">
                     Send
@@ -94,6 +112,16 @@ const Room = () => {
                   </button>
                 </div>
               </>
+            ) : (
+              <div className="footer--button">
+                <button
+                  onClick={handleRaiseHand}
+                  className="btn waves-effect waves-light"
+                  name="action">
+                  Raise Hand
+                  <i className="bi bi-arrow-right-circle-fill right"></i>
+                </button>
+              </div>
             )}
             <div className="footer--button">
               <button className="btn waves-effect waves-light" name="action">

@@ -22,6 +22,7 @@ const Dashboard = () => {
     const { uid } = auth.user;
     await roomCollectionRef.add({
       topic: topic,
+      ownerId: uid,
       members: [uid],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
