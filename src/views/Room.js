@@ -18,7 +18,7 @@ const Room = () => {
 
   const roomObj = roomData?.find((item) => item.id === roomId);
 
-  console.log(roomObj?.members?.some((member) => member.id === auth.user.id));
+  console.log(roomObj?.members?.some((member) => member === auth.user.uid));
 
   console.log(auth.user.uid);
 
@@ -71,9 +71,7 @@ const Room = () => {
               ))}
           </div>
           <div className="room--footer">
-            {roomObj?.members?.some(
-              (member) => member.id === auth.user.uid
-            ) && (
+            {roomObj?.members?.some((member) => member === auth.user.uid) && (
               <>
                 <div className="input-message">
                   <div className="input-field">
