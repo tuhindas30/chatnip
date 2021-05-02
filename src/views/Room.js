@@ -10,14 +10,6 @@ const Room = () => {
   const { roomId } = useParams();
   const [message, setMessage] = useState("");
 
-  // const roomsCollectionRef = firestore
-  //   .collection("rooms")
-  //   .where("members", "array-contains", auth.user.uid);
-
-  // const { data: roomData, status } = useFirestoreQuery(roomsCollectionRef);
-
-  // console.log(roomData);
-
   const conversationCollectionRef = firestore
     .collection("rooms")
     .doc(roomId)
@@ -81,7 +73,7 @@ const Room = () => {
                   onChange={(e) => setMessage(e.target.value)}
                   id="icon_prefix2"
                   className="materialize-textarea"></textarea>
-                <label for="icon_prefix2">Message</label>
+                <label htmlFor="icon_prefix2">Message</label>
               </div>
             </div>
             <div className="footer--button">

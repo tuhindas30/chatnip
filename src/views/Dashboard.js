@@ -3,24 +3,30 @@ import "../assets/css/dashboard.css";
 import "../assets/css/modal.css";
 import useRequireAuth from "../hooks/useRequiredAuth";
 import { useState } from "react";
-import { firestore } from "../firebase";
+import firebase, { firestore } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import useFirestoreQuery from "../hooks/useFirestoreQuery";
 
 const Dashboard = () => {
   const [showModal, setModal] = useState(false);
   const [topic, setTopic] = useState("");
   const auth = useRequireAuth();
-
+  const navigate = useNavigate();
   const roomCollectionRef = firestore.collection("rooms");
+
+  const { data, status } = useFirestoreQuery(
+    roomCollectionRef.orderBy("createdAt", "desc").limit(25)
+  );
 
   const handleCreateRoom = async () => {
     const { uid } = auth.user;
     await roomCollectionRef.add({
       topic: topic,
-      //   members: [uid],
-      owner: uid,
       members: [uid],
-      //   guests: [],
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
+    // data.then((data) => console.log(data));
+    navigate(`/room/${data && data[0].id}`);
   };
 
   const handleModalClose = () => {

@@ -6,7 +6,7 @@ import useFirestoreQuery from "../hooks/useFirestoreQuery";
 const Feed = ({ uid }) => {
   const roomsCollectionRef = firestore
     .collection("rooms")
-    .where("owner", "==", uid);
+    .where("members", "array-contains", uid);
 
   const { data, status } = useFirestoreQuery(roomsCollectionRef);
 
