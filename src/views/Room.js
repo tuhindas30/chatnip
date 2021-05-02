@@ -18,6 +18,10 @@ const Room = () => {
 
   const roomObj = roomData?.find((item) => item.id === roomId);
 
+  console.log(roomObj?.members?.some((member) => member.id === auth.user.id));
+
+  console.log(auth.user.uid);
+
   console.log({ roomObj });
 
   const conversationCollectionRef = firestore
@@ -67,7 +71,9 @@ const Room = () => {
               ))}
           </div>
           <div className="room--footer">
-            {roomObj?.members?.some((member) => member.id === auth.user.id) && (
+            {roomObj?.members?.some(
+              (member) => member.id === auth.user.uid
+            ) && (
               <>
                 <div className="input-message">
                   <div className="input-field">
