@@ -38,11 +38,9 @@ const Dashboard = () => {
   const handleAddToRoom = async () => {
     navigate(`/room/${roomId}`);
     try {
-      await roomCollectionRef
-        .doc(roomId)
-        .update({
-          members: firebase.firestore.FieldValue.arrayUnion(auth.user.uid),
-        });
+      await roomCollectionRef.doc(roomId).update({
+        members: firebase.firestore.FieldValue.arrayUnion(auth.user.uid),
+      });
     } catch (error) {
       console.log(error);
     }

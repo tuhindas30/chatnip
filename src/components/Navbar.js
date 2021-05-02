@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../assets/css/navbar.css";
 import { useAuth } from "../hooks/useAuth";
 
@@ -8,12 +9,12 @@ const Navbar = () => {
       <div className="navbar-fixed">
         <nav className="nav-extended">
           <div className="nav-wrapper">
-            <a href="#" className="brand-logo">
+            <Link to="/" className="brand-logo">
               ChatNip
-            </a>
-            <a href="#" className="sidenav-trigger">
+            </Link>
+            {/* <a href="#" className="sidenav-trigger">
               <i className="material-icons">menu</i>
-            </a>
+            </a> */}
             <div id="nav-mobile" className="right hide-on-med-and-down">
               {user?.photoUrl ? (
                 <img src={user.photoUrl} alt={user.name} />

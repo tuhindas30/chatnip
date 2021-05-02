@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import "../assets/css/signin.css";
-import { useAuth } from "../hooks/useAuth";
 import useRequireAuth from "../hooks/useRequiredAuth";
 
 const SignIn = () => {

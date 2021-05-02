@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import "../assets/css/room.css";
 import firebase, { firestore } from "../firebase";
 import useFirestoreQuery from "../hooks/useFirestoreQuery";
 import useRequireAuth from "../hooks/useRequiredAuth";
 
 const Room = () => {
-  // const [raiseHand, setRaiseHand] = useState({ flag: false, userId: null });
   const auth = useRequireAuth();
   const { roomId } = useParams();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
   const roomCollectionRef = firestore.collection("rooms");
@@ -44,18 +44,15 @@ const Room = () => {
     }
   };
 
-  // const handleRaiseHand = (userId) => {
-  //   setRaiseHand({ flag: true, userId: userId });
-  // };
-
-  const handleUserAccept = async (userId) => {
+  const handleLeaveRoom = async () => {
     try {
-      await roomCollectionRef
-        .doc(roomId)
-        .add({ members: [userId] }, { merge: true });
+      await roomCollectionRef.doc(roomId).update({
+        members: firebase.firestore.FieldValue.arrayRemove(auth.user.uid),
+      });
     } catch (error) {
       console.log(error);
     }
+    navigate("/dash");
   };
 
   if (!auth.user) return <div>Loading....</div>;
@@ -63,20 +60,9 @@ const Room = () => {
   return (
     <>
       <div className="dashboard--container">
-        {/* <div className="notification">
-                <div>Username: {raiseHand.userId} wants to join</div>
-                <button
-                  onClick={() => handleUserAccept(raiseHand.userId)}
-                  className="btn waves-effect waves-light"
-                  name="action">
-                  Accept
-                  <i className="bi bi-arrow-right-circle-fill right"></i>
-                </button>
-              </div> */}
-
         <div className="room--container">
           <div className="room--header">
-            <div className="room--title">Room</div>
+            <div className="room--title">{roomObj?.topic}</div>
             <small>
               <span style={{ color: "var(--color-primary-200)" }}>with</span>{" "}
               <span className="room--admin">{auth.user.uid}</span>
@@ -98,42 +84,31 @@ const Room = () => {
               ))}
           </div>
           <div className="room--footer">
-            {/* {roomObj?.members?.some((member) => member === auth.user.uid) ? ( */}
-            <>
-              <div className="input-message">
-                <div className="input-field">
-                  <i className="material-icons prefix">mode_edit</i>
-                  <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    id="icon_prefix2"
-                    className="materialize-textarea"></textarea>
-                  <label htmlFor="icon_prefix2">Message</label>
-                </div>
+            <div className="input-message">
+              <div className="input-field">
+                <i className="material-icons prefix">mode_edit</i>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  id="icon_prefix2"
+                  className="materialize-textarea"></textarea>
+                <label htmlFor="icon_prefix2">Message</label>
               </div>
-              <div className="footer--button">
-                <button
-                  onClick={() => handleMessageSubmit(auth.user.uid)}
-                  className="btn waves-effect waves-light"
-                  name="action">
-                  Send
-                  <i className="bi bi-arrow-right-circle-fill right"></i>
-                </button>
-              </div>
-            </>
-            {/* ) : ( */}
+            </div>
             <div className="footer--button">
-              {/* <button
-                // onClick={() => handleRaiseHand(auth.user.uid)}
+              <button
+                onClick={() => handleMessageSubmit(auth.user.uid)}
                 className="btn waves-effect waves-light"
                 name="action">
-                Raise Hand
+                Send
                 <i className="bi bi-arrow-right-circle-fill right"></i>
-              </button> */}
+              </button>
             </div>
-            {/* )} */}
             <div className="footer--button">
-              <button className="btn waves-effect waves-light" name="action">
+              <button
+                onClick={handleLeaveRoom}
+                className="btn waves-effect waves-light"
+                name="action">
                 Leave
                 <i className="bi bi-box-arrow-right right"></i>
               </button>
