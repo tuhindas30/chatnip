@@ -34,4 +34,4 @@ You can join a demo room at **ChatNip** using the below credentials.
 
 - [React](https://reactjs.org/)
 - [Firebase](https://firebase.google.com)
-- [Materialize CSS](https://https://materializecss.com/)
+- [Materialize CSS](https://materializecss.com/)
